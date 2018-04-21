@@ -62,7 +62,7 @@ function app(state) {
         {
           value: state.sides,
           min: 1,
-          pattern: "\d*",
+          pattern: "\\d*",
           type: 'number',
           id: 'sides',
           name: 'sides'
@@ -81,7 +81,7 @@ function app(state) {
         {
           value: state.numberOfDice,
           min: 1,
-          pattern: "\d*",
+          pattern: "\\d*",
           type: 'number',
           id: 'number-of-dice',
           name: 'number-of-dice'
