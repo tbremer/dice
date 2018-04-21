@@ -1,10 +1,11 @@
+const appRoot = document.getElementById('app-root');
 const state = Object.assign(
   Object.create(null),
   {
     sides: 6,
     numberOfDice: 1,
     rollSet: [],
-  },
+  }
 );
 
 const _internalState = Object.assign(Object.create(null), state);
@@ -14,22 +15,29 @@ Object.defineProperties(
   Object.getOwnPropertyNames(state)
     .reduce(function defineProperties(all, current) {
       const property = {
-        get: function get(key) {
-          return _internalState[key];
+        get: function get() {
+          console.log('getting state:', current, _internalState);
+          return _internalState[current];
         },
         set: function set(v) {
           console.log('setting v (', v, ') for property ', current);
 
           _internalState[current] = v;
+
+          render(state, app, appRoot);
         }
     };
 
     all[current] = property;
 
     return all;
-  }, {}))
+  }, {})
+);
 
-const appRoot = document.getElementById('app-root');
+/**
+ * INITIAL RENDER
+ */
+render(state, app, appRoot);
 
 function app(state) {
   return buildTree(
@@ -49,7 +57,7 @@ function app(state) {
         'How Many Sides?'
       ),
       buildTree('br'),
-      buildTree('input', { min: 1, value: 6, type: 'number', id: 'sides', name: 'sides' }),
+      buildTree('input', { min: 1, value: state.sides, type: 'number', id: 'sides', name: 'sides' }),
       buildTree('br'),
       buildTree('br'),
       buildTree(
@@ -58,24 +66,33 @@ function app(state) {
         'How Many Dice?'
       ),
       buildTree('br'),
-      buildTree('input', { min: 1, value: 1, type: 'number', id: 'number-of-dice', name: 'number-of-dice' }),
+      buildTree('input', { min: 1, value: state.numberOfDice, type: 'number', id: 'number-of-dice', name: 'number-of-dice' }),
       buildTree('br'),
       buildTree('button', null, 'submit'),
     ),
     buildTree('hr'),
-    buildTree(
-      'ul',
+    state.rollSet.length ?
+      buildTree(
+        'li',
+        null,
+        'total: ',
+        (state.rollSet || []).reduce(function (all, current) {
+          return all += current;
+        }, 0)
+      ) :
       null,
-      (state.roll || []).map(function (die) {
+    buildTree(
+      'ol',
+      null,
+      (state.rollSet || []).map(function (die) {
         return buildTree('li', null, die)
       }),
     )
   );
 }
 
-render(state, app, appRoot);
-
 function render(state, view, root) {
+  console.log('render:', state, view);
   while (root.firstChild) root.removeChild(root.firstChild);
 
   root.appendChild(buildTree(view(state)));
@@ -99,7 +116,9 @@ function buildTree(nodeName, attrs) {
   children.forEach(function(child) {
     let kiddo = child;
 
-    if (typeof kiddo === 'string') {
+    if (!kiddo) return;
+
+    if (typeof kiddo === 'string' || typeof kiddo === 'number') {
       kiddo = document.createTextNode(kiddo);
     }
 
