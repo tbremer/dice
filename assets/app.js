@@ -103,7 +103,7 @@ function app(state) {
     buildTree('hr'),
     state.rollSet.length ?
       buildTree(
-        'li',
+        'div',
         null,
         'total: ',
         (state.rollSet || []).reduce(function (all, current) {
