@@ -1,3 +1,13 @@
+(function() {
+  if (
+    false &&
+    /iP(?:hone|ad)/i.test(window.navigator.userAgent) &&
+    window.navigator.standalone
+  ) {
+    document.body.classList.add('is-ios');
+  }
+}());
+
 const appRoot = document.getElementById('app-root');
 const state = Object.assign(
   Object.create(null),

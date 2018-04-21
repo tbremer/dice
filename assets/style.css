@@ -14,9 +14,22 @@
 
 *, *::before, *::after { box-sizing: border-box; }
 
+html, body {
+  padding: 0;
+  margin: 0;
+}
+
 html {
   width: 100%;
   height: 100%;
   font-size: 1rem;
   background-color: var(--primary);
+}
+
+.is-ios .sticky-spot {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  height: 20px;
+  background-color: #f06;
 }
