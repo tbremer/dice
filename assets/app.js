@@ -57,7 +57,17 @@ function app(state) {
         'How Many Sides?'
       ),
       buildTree('br'),
-      buildTree('input', { min: 1, value: state.sides, type: 'number', id: 'sides', name: 'sides' }),
+      buildTree(
+        'input',
+        {
+          value: state.sides,
+          min: 1,
+          pattern: "\d*",
+          type: 'number',
+          id: 'sides',
+          name: 'sides'
+        }
+      ),
       buildTree('br'),
       buildTree('br'),
       buildTree(
@@ -66,9 +76,19 @@ function app(state) {
         'How Many Dice?'
       ),
       buildTree('br'),
-      buildTree('input', { min: 1, value: state.numberOfDice, type: 'number', id: 'number-of-dice', name: 'number-of-dice' }),
+      buildTree(
+        'input',
+        {
+          value: state.numberOfDice,
+          min: 1,
+          pattern: "\d*",
+          type: 'number',
+          id: 'number-of-dice',
+          name: 'number-of-dice'
+        }
+      ),
       buildTree('br'),
-      buildTree('button', null, 'submit'),
+      buildTree('button', { type: 'submit' }, 'submit'),
     ),
     buildTree('hr'),
     state.rollSet.length ?
