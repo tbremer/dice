@@ -1,6 +1,6 @@
 (function() {
   if (
-    false &&
+    // false &&
     /iP(?:hone|ad)/i.test(window.navigator.userAgent) &&
     window.navigator.standalone
   ) {
@@ -26,12 +26,9 @@ Object.defineProperties(
     .reduce(function defineProperties(all, current) {
       const property = {
         get: function get() {
-          console.log('getting state:', current, _internalState);
           return _internalState[current];
         },
         set: function set(v) {
-          console.log('setting v (', v, ') for property ', current);
-
           _internalState[current] = v;
 
           render(state, app, appRoot);
